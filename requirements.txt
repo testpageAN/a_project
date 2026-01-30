@@ -1,3 +1,7 @@
 Django>=4.2
 psycopg2-binary
 pytz
+gunicorn
+whitenoise
+python-decouple
+dj-database-url
