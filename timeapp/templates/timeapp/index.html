@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Παγκόσμιες Ώρες</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'timeapp/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Παγκόσμιες Ώρες</h1>
+        
+        <div class="time-grid">
+            <div class="time-section">
+                <h2>🖥️ Τοπική Ώρα</h2>
+                <div class="time-display" id="local-time">
+                    Φόρτωση...
+                </div>
+            </div>
+            
+            <div class="time-section">
+                <h2>🌐 Greenwich (UTC)</h2>
+                <div class="time-display" id="utc-time">
+                    Φόρτωση...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Timezone Selector -->
+        <div class="timezone-selector">
+            <h3>➕ Προσθήκη Νέας Πόλης</h3>
+            <div class="selector-controls">
+                <select id="region-select" class="selector-input">
+                    <option value="">Επιλέξτε Περιοχή...</option>
+                    {% for region in regions %}
+                    <option value="{{ region }}">{{ region }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select id="city-select" class="selector-input" disabled>
+                    <option value="">Επιλέξτε πρώτα περιοχή...</option>
+                </select>
+                
+                <button id="add-city-btn" class="add-btn" disabled>Προσθήκη</button>
+            </div>
+        </div>
+        
+        <div class="section-title">📍 Ώρες Ανά Πόλη</div>
+        
+        <table id="cities-table">
+            <thead>
+                <tr>
+                    <th>Περιοχή</th>
+                    <th>Πόλη</th>
+                    <th>Ημερομηνία & Ώρα</th>
+                    <th>Ενέργειες</th>
+                </tr>
+            </thead>
+            <tbody id="cities-tbody">
+                {% for city in cities %}
+                <tr data-timezone="{{ city.timezone }}">
+                    <td class="country">{{ city.country }}</td>
+                    <td class="city">{{ city.city }}</td>
+                    <td class="time">Φόρτωση...</td>
+                    <td>
+                        <button class="remove-btn" onclick="removeCity(this)">🗑️</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Hidden data for JavaScript -->
+    <script id="timezones-data" type="application/json">
+        {{ all_timezones|safe }}
+    </script>
+    
+    <script src="{% static 'timeapp/js/script.js' %}"></script>
+</body>
+</html>
